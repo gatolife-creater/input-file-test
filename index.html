@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ページタイトル</title>
+
+    <script>
+        /*---- 関数：ファイルを保存 ----*/
+        function saveFile() {
+            //--] ファイル名
+            const fname = "adblock.js";
+            //--] 出力するテキスト
+            const text = document.editor.input.value;
+            //--] Blob を生成
+            const blob =
+                ("Blob" in window) ? new Blob([text], { "type": "text/html" }) : null;
+            if (!blob) { alert("ご利用のブラウザ環境では出力できません") }
+            //--] Blob からデータ URL を生成
+            const url = window.URL.createObjectURL(blob);
+            //--] ダウンロード
+            const a = document.createElement("a");
+            a.setAttribute("href", url);
+            a.setAttribute("download", fname);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <form name="editor" action="javascript:void(0);">
+        <section>
+            <textarea name="input"></textarea>
+        </section>
+        <section>
+            <input type="button" name="save" value="出力" onclick="saveFile()">
+        </section>
+    </form>
+
+</body>
+
+</html>
